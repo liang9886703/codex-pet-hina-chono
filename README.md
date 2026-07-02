@@ -29,11 +29,21 @@ The script copies files into:
 ${CODEX_HOME:-$HOME/.codex}/pets/<pet-id>/
 ```
 
-## Preview
+## README preview
 
-GitHub README pages do not run custom JavaScript from embedded HTML files, so `preview.html` cannot be embedded as the interactive preview here. The README uses a generated GIF preview instead.
+GitHub README pages do not run custom JavaScript from embedded HTML files, so `preview.html` cannot be embedded as the interactive preview here. The README uses generated GIF previews instead. These GIFs are composited on a light checker background to avoid black frames in GitHub's renderer; the actual Codex pet package still uses `pets/hina/spritesheet.webp`.
 
-![Hina idle animation](docs/previews/hina-idle.gif)
+| Idle | Running right | Running left |
+| --- | --- | --- |
+| ![Hina idle animation](docs/previews/hina-idle.gif) | ![Hina running right animation](docs/previews/hina-running-right.gif) | ![Hina running left animation](docs/previews/hina-running-left.gif) |
+
+| Waving | Jumping | Failed |
+| --- | --- | --- |
+| ![Hina waving animation](docs/previews/hina-waving.gif) | ![Hina jumping animation](docs/previews/hina-jumping.gif) | ![Hina failed animation](docs/previews/hina-failed.gif) |
+
+| Waiting | Running | Review |
+| --- | --- | --- |
+| ![Hina waiting animation](docs/previews/hina-waiting.gif) | ![Hina running animation](docs/previews/hina-running.gif) | ![Hina review animation](docs/previews/hina-review.gif) |
 
 For full atlas/state inspection, open `preview.html` in a browser and choose a pet/state. The preview page is static and does not require a build step.
 
@@ -45,7 +55,15 @@ For full atlas/state inspection, open `preview.html` in a browser and choose a p
 ├── preview.html
 ├── docs
 │   └── previews
-│       └── hina-idle.gif
+│       ├── hina-failed.gif
+│       ├── hina-idle.gif
+│       ├── hina-jumping.gif
+│       ├── hina-review.gif
+│       ├── hina-running-left.gif
+│       ├── hina-running-right.gif
+│       ├── hina-running.gif
+│       ├── hina-waiting.gif
+│       └── hina-waving.gif
 ├── pets
 │   └── hina
 │       ├── pet.json
