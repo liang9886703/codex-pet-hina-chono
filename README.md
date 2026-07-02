@@ -7,7 +7,6 @@ Codex-compatible pet packages exported from the local Codex pet directory.
 | Pet | Display name | Source |
 | --- | --- | --- |
 | `hina` | Hina | `pets/hina/` |
-| `liangbyte` | LiangByte | `pets/liangbyte/` |
 
 Each pet directory contains:
 
@@ -24,12 +23,6 @@ Install one pet:
 ./tools/install.sh hina
 ```
 
-Install all bundled pets:
-
-```bash
-./tools/install.sh all
-```
-
 The script copies files into:
 
 ```text
@@ -38,7 +31,11 @@ ${CODEX_HOME:-$HOME/.codex}/pets/<pet-id>/
 
 ## Preview
 
-Open `preview.html` in a browser and choose a pet/state. The preview page is static and does not require a build step.
+GitHub README pages do not run custom JavaScript from embedded HTML files, so `preview.html` cannot be embedded as the interactive preview here. The README uses a generated GIF preview instead.
+
+![Hina idle animation](docs/previews/hina-idle.gif)
+
+For full atlas/state inspection, open `preview.html` in a browser and choose a pet/state. The preview page is static and does not require a build step.
 
 ## Repository layout
 
@@ -46,11 +43,11 @@ Open `preview.html` in a browser and choose a pet/state. The preview page is sta
 .
 ├── README.md
 ├── preview.html
+├── docs
+│   └── previews
+│       └── hina-idle.gif
 ├── pets
-│   ├── hina
-│   │   ├── pet.json
-│   │   └── spritesheet.webp
-│   └── liangbyte
+│   └── hina
 │       ├── pet.json
 │       └── spritesheet.webp
 └── tools
