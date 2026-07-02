@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codex Pet Preview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171717;
+      --muted: #656565;
+      --line: #d9d9d9;
+      --panel: #ffffff;
+      --page: #f5f5f2;
+      --accent: #0f766e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--page);
+    }
+
+    main {
+      width: min(1040px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select,
+    input {
+      min-width: 180px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0 10px;
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(260px, 360px) 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .preview-panel,
+    .atlas-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 20px;
+    }
+
+    .sprite-wrap {
+      width: 100%;
+      aspect-ratio: 192 / 208;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background:
+        linear-gradient(45deg, #ececea 25%, transparent 25%),
+        linear-gradient(-45deg, #ececea 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ececea 75%),
+        linear-gradient(-45deg, transparent 75%, #ececea 75%);
+      background-size: 24px 24px;
+      background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+    }
+
+    .sprite {
+      width: 192px;
+      height: 208px;
+      image-rendering: auto;
+      background-repeat: no-repeat;
+      transform: scale(1.35);
+      transform-origin: center;
+    }
+
+    .meta {
+      margin-top: 16px;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .atlas {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fafafa;
+    }
+
+    .state-list {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .state-list span {
+      border-left: 3px solid var(--accent);
+      padding-left: 8px;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100vw - 24px, 1040px);
+        padding: 24px 0;
+      }
+
+      header,
+      .stage {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .state-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Codex Pet Preview</h1>
+        <p>Preview the bundled 8 x 9 pet sprite atlases.</p>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Preview controls">
+      <label>
+        Pet
+        <select id="petSelect"></select>
+      </label>
+      <label>
+        State
+        <select id="stateSelect"></select>
+      </label>
+      <label>
+        Speed (ms)
+        <input id="speedInput" type="number" min="80" max="1000" step="20" value="140">
+      </label>
+    </section>
+
+    <section class="stage">
+      <div class="preview-panel">
+        <div class="sprite-wrap">
+          <div id="sprite" class="sprite" role="img" aria-label="Animated pet preview"></div>
+        </div>
+        <div class="meta">
+          <strong id="petName"></strong>
+          <span id="petDesc"></span>
+          <span id="frameInfo"></span>
+        </div>
+      </div>
+
+      <div class="atlas-panel">
+        <img id="atlas" class="atlas" alt="Full pet spritesheet">
+        <div id="stateList" class="state-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const CELL_W = 192;
+    const CELL_H = 208;
+    const FRAMES = 8;
+    const STATES = [
+      "idle",
+      "running-right",
+      "running-left",
+      "waving",
+      "jumping",
+      "failed",
+      "waiting",
+      "running",
+      "review"
+    ];
+
+    const PETS = [
+      {
+        id: "hina",
+        displayName: "Hina",
+        description: "A lively cute chibi pet inspired by Chono Hina with pink hair, curled twin side buns, and blue-pink school outfit colors.",
+        spritesheetPath: "pets/hina/spritesheet.webp"
+      },
+      {
+        id: "liangbyte",
+        displayName: "LiangByte",
+        description: "A compact coding companion for agent workflows, debugging, recovery scripts, and design handoffs.",
+        spritesheetPath: "pets/liangbyte/spritesheet.webp"
+      }
+    ];
+
+    const petSelect = document.querySelector("#petSelect");
+    const stateSelect = document.querySelector("#stateSelect");
+    const speedInput = document.querySelector("#speedInput");
+    const sprite = document.querySelector("#sprite");
+    const atlas = document.querySelector("#atlas");
+    const petName = document.querySelector("#petName");
+    const petDesc = document.querySelector("#petDesc");
+    const frameInfo = document.querySelector("#frameInfo");
+    const stateList = document.querySelector("#stateList");
+
+    let frame = 0;
+    let timer = 0;
+
+    for (const pet of PETS) {
+      const option = document.createElement("option");
+      option.value = pet.id;
+      option.textContent = pet.displayName;
+      petSelect.append(option);
+    }
+
+    for (const [index, state] of STATES.entries()) {
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = state;
+      stateSelect.append(option);
+    }
+
+    stateList.replaceChildren(...STATES.map((state, index) => {
+      const item = document.createElement("span");
+      item.textContent = `${index}: ${state}`;
+      return item;
+    }));
+
+    function selectedPet() {
+      return PETS.find((pet) => pet.id === petSelect.value) || PETS[0];
+    }
+
+    function render() {
+      const pet = selectedPet();
+      const row = Number(stateSelect.value);
+      sprite.style.backgroundImage = `url("${pet.spritesheetPath}")`;
+      sprite.style.backgroundSize = `${CELL_W * FRAMES}px ${CELL_H * STATES.length}px`;
+      sprite.style.backgroundPosition = `-${frame * CELL_W}px -${row * CELL_H}px`;
+      atlas.src = pet.spritesheetPath;
+      petName.textContent = `${pet.displayName} (${pet.id})`;
+      petDesc.textContent = pet.description;
+      frameInfo.textContent = `State ${row}: ${STATES[row]}, frame ${frame + 1}/${FRAMES}`;
+    }
+
+    function restart() {
+      window.clearInterval(timer);
+      frame = 0;
+      render();
+      timer = window.setInterval(() => {
+        frame = (frame + 1) % FRAMES;
+        render();
+      }, Number(speedInput.value) || 140);
+    }
+
+    petSelect.addEventListener("change", restart);
+    stateSelect.addEventListener("change", restart);
+    speedInput.addEventListener("change", restart);
+    restart();
+  </script>
+</body>
+</html>
