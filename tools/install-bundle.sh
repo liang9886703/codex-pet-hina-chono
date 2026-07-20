@@ -19,7 +19,9 @@ esac
 
 "$ROOT_DIR/tools/install.sh" hina
 if [[ "$APPLY_NOW" == "true" ]]; then
+  "$ROOT_DIR/tools/install-theme.sh" hina-chono-blue-white
   "$ROOT_DIR/tools/install-theme.sh" hina-chono --apply
 else
   "$ROOT_DIR/tools/install-theme.sh" hina-chono
+  "$ROOT_DIR/tools/install-theme.sh" hina-chono-blue-white
 fi

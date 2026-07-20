@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "hina-chono",
-  "name": "蝶野雏 · 粉色小宇宙",
+  "id": "hina-chono-blue-white",
+  "name": "蝶野雏 · 蓝白小宇宙",
   "brandSubtitle": "CODEX DREAM SKIN",
   "tagline": "把喜欢的画面变成可交互的 Codex 工作台。",
   "projectPrefix": "选择项目 · ",
   "projectLabel": "◉  选择项目",
   "statusText": "DREAM SKIN ONLINE",
   "quote": "MAKE SOMETHING WONDERFUL",
-  "image": "background.jpg",
+  "image": "background.png",
   "appearance": "auto",
   "art": {
     "safeArea": "auto",
     "taskMode": "auto"
   },
   "colors": {
-    "accent": "#f49ab0",
-    "accentAlt": "#f49ab0",
-    "line": "rgba(244, 154, 176, 0.32)",
-    "secondary": "#aea7e8",
-    "highlight": "#6d82c8"
+    "accent": "#6d82c8",
+    "accentAlt": "#8fa4e8",
+    "line": "rgba(109, 130, 200, 0.30)",
+    "secondary": "#aeb8ea",
+    "highlight": "#7f97d8"
   }
 }

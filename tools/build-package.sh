@@ -30,6 +30,7 @@ trap cleanup EXIT
 /bin/cp -R "$ROOT_DIR/pets/hina" "$PACKAGE_ROOT/pets/hina"
 /bin/cp "$ROOT_DIR/themes/README.md" "$PACKAGE_ROOT/themes/README.md"
 /bin/cp -R "$ROOT_DIR/themes/hina-chono" "$PACKAGE_ROOT/themes/hina-chono"
+/bin/cp -R "$ROOT_DIR/themes/hina-chono-blue-white" "$PACKAGE_ROOT/themes/hina-chono-blue-white"
 /bin/cp "$ROOT_DIR/tools/install.sh" "$PACKAGE_ROOT/tools/install.sh"
 /bin/cp "$ROOT_DIR/tools/install-theme.sh" "$PACKAGE_ROOT/tools/install-theme.sh"
 /bin/cp "$ROOT_DIR/tools/install-bundle.sh" "$PACKAGE_ROOT/tools/install-bundle.sh"
