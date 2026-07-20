@@ -26,6 +26,7 @@ trap cleanup EXIT
 /bin/cp "$ROOT_DIR/NOTICE.md" "$PACKAGE_ROOT/NOTICE.md"
 /bin/cp "$ROOT_DIR/preview.html" "$PACKAGE_ROOT/preview.html"
 /bin/cp -R "$ROOT_DIR/docs/previews" "$PACKAGE_ROOT/docs/previews"
+/bin/cp -R "$ROOT_DIR/docs/screenshots" "$PACKAGE_ROOT/docs/screenshots"
 /bin/cp -R "$ROOT_DIR/pets/hina" "$PACKAGE_ROOT/pets/hina"
 /bin/cp "$ROOT_DIR/themes/README.md" "$PACKAGE_ROOT/themes/README.md"
 /bin/cp -R "$ROOT_DIR/themes/hina-chono" "$PACKAGE_ROOT/themes/hina-chono"
