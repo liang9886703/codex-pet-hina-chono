@@ -5,8 +5,11 @@
 ```text
 themes/hina-chono/
 ├── theme.json
-└── background.jpg
+├── background.png
+└── background-pink.jpg
 ```
+
+`background.png` is the active blue-and-white artwork. `background-pink.jpg` keeps the previous pink version as an optional source asset; `theme.json` determines which image is installed and applied.
 
 Install it with:
 
