@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PET_ROOT="$ROOT_DIR/pets"
-TARGET_ROOT="${CODEX_HOME:-$HOME/.codex}/pets"
+TARGET_ROOT="${CODEX_PET_TARGET_ROOT:-${CODEX_HOME:-$HOME/.codex}/pets}"
 
 usage() {
   cat <<'USAGE'
